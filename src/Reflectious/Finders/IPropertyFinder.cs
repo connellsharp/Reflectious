@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Firestorm
+namespace Reflectious
 {
     internal interface IPropertyFinder
     {

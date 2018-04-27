@@ -1,10 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using JetBrains.Annotations;
 
-namespace Firestorm
+namespace Reflectious
 {
     public abstract class MethodReflectorBase<TInstance, TReturn>
     {

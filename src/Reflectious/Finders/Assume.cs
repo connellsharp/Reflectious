@@ -1,4 +1,4 @@
-﻿namespace Firestorm
+﻿namespace Reflectious
 {
     public enum Assume
     {

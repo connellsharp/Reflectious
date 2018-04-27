@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 
-namespace Firestorm
+namespace Reflectious
 {
     internal class ExtensionMethodFinder : IMethodFinder
     {

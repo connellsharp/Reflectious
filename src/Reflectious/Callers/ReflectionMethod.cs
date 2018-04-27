@@ -1,6 +1,6 @@
 ﻿using System.Reflection;
 
-namespace Firestorm
+namespace Reflectious
 {
     public class ReflectionMethod : IMethod
     {

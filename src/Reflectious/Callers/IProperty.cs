@@ -1,7 +1,6 @@
 ﻿using System;
-using System.Reflection;
 
-namespace Firestorm
+namespace Reflectious
 {
     public interface IProperty
     {

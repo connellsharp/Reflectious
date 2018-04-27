@@ -2,7 +2,7 @@
 using System.Linq.Expressions;
 using JetBrains.Annotations;
 
-namespace Firestorm
+namespace Reflectious
 {
    
     public class InstanceReflector<TInstance> : InstanceReflector

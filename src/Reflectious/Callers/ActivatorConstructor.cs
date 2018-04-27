@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Reflection;
 
-namespace Firestorm
+namespace Reflectious
 {
     internal class ActivatorConstructor : IMethod
     {

@@ -2,7 +2,7 @@
 using System.Linq.Expressions;
 using System.Reflection;
 
-namespace Firestorm
+namespace Reflectious
 {
     internal class ExpressionPropertyFinder<TSource, TReturn> : IPropertyFinder
     {

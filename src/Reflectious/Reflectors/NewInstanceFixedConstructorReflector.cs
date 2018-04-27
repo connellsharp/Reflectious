@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Firestorm
+namespace Reflectious
 {
     public abstract class NewInstanceFixedConstructorReflectorBase<TInstance> : NewInstanceReflector<TInstance>
     {

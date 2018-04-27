@@ -1,8 +1,7 @@
 ﻿using System;
-using System.Collections.Concurrent;
 using System.Reflection;
 
-namespace Firestorm
+namespace Reflectious
 {
     internal abstract class MemberFinder
     {

@@ -1,8 +1,7 @@
 ﻿using System;
-using System.Reflection;
 using JetBrains.Annotations;
 
-namespace Firestorm
+namespace Reflectious
 {
     public abstract class StrongMethodReflectorBase<TInstance, TReturn> : MethodReflectorBase<TInstance, TReturn>
     {

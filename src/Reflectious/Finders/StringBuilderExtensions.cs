@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text;
 
-namespace Firestorm
+namespace Reflectious
 {
     internal static class StringBuilderExtensions
     {

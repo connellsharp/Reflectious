@@ -4,7 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using JetBrains.Annotations;
 
-namespace Firestorm
+namespace Reflectious
 {
     public class StaticReflector : StaticReflector<object>
     {

@@ -2,7 +2,7 @@
 using System.Reflection;
 using System.Text;
 
-namespace Firestorm
+namespace Reflectious
 {
     internal class SingleMethodFinder : MemberFinder, ICacheableMethodFinder
     {

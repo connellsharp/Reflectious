@@ -1,6 +1,4 @@
-using System;
-
-namespace Firestorm.Tests
+namespace Reflectious.Tests
 {
     internal class Stub
     {

@@ -3,7 +3,7 @@ using System.Linq.Expressions;
 using System.Reflection;
 using JetBrains.Annotations;
 
-namespace Firestorm
+namespace Reflectious
 {
     /// <remarks>
     /// Taken from http://stackoverflow.com/a/672212 and http://stackoverflow.com/a/17116267

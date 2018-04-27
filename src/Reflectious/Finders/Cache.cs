@@ -2,7 +2,7 @@
 using System.Collections.Concurrent;
 using System.Diagnostics;
 
-namespace Firestorm
+namespace Reflectious
 {
     internal class Cache<T>
     {

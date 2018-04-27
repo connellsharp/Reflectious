@@ -1,7 +1,7 @@
 ﻿using System;
 using JetBrains.Annotations;
 
-namespace Firestorm
+namespace Reflectious
 {
     internal interface IInstanceGetter
     {

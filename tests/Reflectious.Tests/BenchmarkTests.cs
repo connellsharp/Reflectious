@@ -3,10 +3,9 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
-using Firestorm;
 using Xunit;
 
-namespace Firestorm.Tests
+namespace Reflectious.Tests
 {
     public class BenchmarkTests
     {

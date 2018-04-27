@@ -1,7 +1,7 @@
 using System;
 using Xunit;
 
-namespace Firestorm.Tests
+namespace Reflectious.Tests
 {
     public class ServiceProviderTests
     {

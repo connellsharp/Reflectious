@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Firestorm
+namespace Reflectious
 {
     public static class ReflectorExtension
     {   
