@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Reflection;
 using Xunit;
 
@@ -107,6 +108,30 @@ namespace Reflectious.Tests
             }
         }
 
+        [Fact]
+        public void CreateComplexInstance_StringAndExpression_AsFastAsReflection()
+        {
+            var propertyReturnType = typeof(string);
+            Expression<Func<Stub, string>> getLengthExpr = s => s.InstanceProperty;
+            
+            new BenchmarkActions
+                {
+                    LibraryCode = () =>
+                    {
+                        var reader = typeof(TypeParamStub<,>).Reflect()
+                            .MakeGeneric(typeof(Stub), propertyReturnType)
+                            .CastTo<ITypeParamStub<Stub>>()
+                            .CreateInstance(getLengthExpr);
+                    },
+                    NativeCode = () =>
+                    {
+                        Type readerFieldValueType = typeof(TypeParamStub<,>).MakeGenericType(typeof(Stub), propertyReturnType);
+                        var reader = (ITypeParamStub<Stub>) Activator.CreateInstance(readerFieldValueType, getLengthExpr);
+                    }
+                }
+                .AssertFasterOrEqual();
+        }
+
         private class BenchmarkActions
         {
             public Action LibraryCode { get; set; }
@@ -138,6 +163,20 @@ namespace Reflectious.Tests
             
             Assert.True(library <= native,
                 $"{ratio:#.0}x slower than native. Library {library} ticks. Native {native} ticks.");
+        }
+    }
+
+    public interface ITypeParamStub<T>
+    {
+    }
+
+    public class TypeParamStub<T, T1> : ITypeParamStub<T>
+    {
+        private readonly Expression<Func<T, T1>> _expr;
+
+        public TypeParamStub(Expression<Func<T, T1>> expr)
+        {
+            _expr = expr;
         }
     }
 }

@@ -20,6 +20,12 @@ namespace Reflectious
         }
 
         [PublicAPI]
+        public StaticReflector<T> CastTo<T>() where T : class
+        {
+            return new StaticReflector<T>(InstanceGetter);
+        }
+
+        [PublicAPI]
         public new WeakMethodReflector GetConstructor()
         {
             
