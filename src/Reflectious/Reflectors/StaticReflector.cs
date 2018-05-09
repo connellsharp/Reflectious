@@ -24,13 +24,6 @@ namespace Reflectious
         {
             return new StaticReflector<T>(InstanceGetter);
         }
-
-        [PublicAPI]
-        public new WeakMethodReflector GetConstructor()
-        {
-            
-            return new WeakMethodReflector(null, new ConstructorFinder(InstanceGetter.Type));
-        }
     }
 
     public class StaticReflector<TType> : InstanceReflector<TType>
@@ -53,9 +46,10 @@ namespace Reflectious
         }
 
         [PublicAPI]
-        public WeakMethodReflector<TType, TType> GetConstructor()
+        public ConstructorReflector<TType> GetConstructor()
         {
-            return new WeakMethodReflector<TType, TType>(null, new ConstructorFinder(InstanceGetter.Type));
+            var finder = FinderUtility.GetConstructorFinder(InstanceGetter.Type, Assume.Nothing);
+            return new ConstructorReflector<TType>(finder);
         }
 
         [PublicAPI]

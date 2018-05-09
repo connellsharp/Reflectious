@@ -4,13 +4,22 @@ namespace Reflectious
 {
     internal static class FinderUtility
     {
-        private static readonly Cache<CachedMethodFinder> MethodFinders = new Cache<CachedMethodFinder>();
+        private static readonly Cache<int, SingletonMethodFinder> MethodFinders = new Cache<int, SingletonMethodFinder>();
         
         public static IMethodFinder GetMethodFinder(Type classType, string methodName, bool isStatic, Assume assume)
         {
             IMethodFinder finder =
-            MethodFinders.GetOrAdd(classType.GetHashCode() + methodName, 
-                () => new CachedMethodFinder(GetNonCachedFinder(classType, methodName, isStatic, assume)));
+            MethodFinders.GetOrAdd(classType.GetHashCode() + methodName.GetHashCode(), 
+                () => new SingletonMethodFinder(GetNonCachedFinder(classType, methodName, isStatic, assume)));
+
+            return finder;
+        }
+
+        public static IMethodFinder GetConstructorFinder(Type classType, Assume assume)
+        {
+            IMethodFinder finder =
+                MethodFinders.GetOrAdd(classType.GetHashCode(), 
+                    () => new SingletonMethodFinder(new ConstructorFinder(classType)));
 
             return finder;
         }

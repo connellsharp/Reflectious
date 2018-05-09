@@ -5,6 +5,9 @@ using JetBrains.Annotations;
 
 namespace Reflectious
 {
+    /// <summary>
+    /// Exposes the fluent API for a method where the parameter types are not known at compile time.
+    /// </summary>
     public class WeakMethodReflector<TInstance, TReturn> : MethodReflectorBase<TInstance, TReturn>
     {
         internal WeakMethodReflector(TInstance instance, [NotNull] IMethodFinder methodFinder) 

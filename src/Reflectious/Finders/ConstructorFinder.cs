@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Reflectious
 {
-    internal class ConstructorFinder : IMethodFinder
+    internal class ConstructorFinder : ICacheableMethodFinder
     {
         protected readonly Type Type;
 
@@ -29,11 +29,12 @@ namespace Reflectious
 
         public IMethod Find()
         {
-            Type type = GetGenericType();
+            Type type = BuildFullType();
             
-            return new ActivatorConstructor(type);
+            //return new ActivatorConstructor(type);
             
             var ctorInfo = FindConstructorInfo(type);
+            return new CompiledLambdaConstructor(ctorInfo);
             return new ReflectionConstructor(ctorInfo);
         }
 
@@ -60,7 +61,7 @@ namespace Reflectious
             }
         }
 
-        private Type GetGenericType()
+        private Type BuildFullType()
         {
             Type type = Type;
 

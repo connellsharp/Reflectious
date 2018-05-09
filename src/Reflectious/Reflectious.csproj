@@ -9,4 +9,7 @@
   <ItemGroup>
     <PackageReference Include="Jetbrains.Annotations" Version="11.0.0" />
   </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System.Reflection" />
+  </ItemGroup>
 </Project>

@@ -3,11 +3,11 @@ using System.Linq;
 
 namespace Reflectious
 {
-    internal class CachedMethodFinder : IMethodFinder
+    internal class SingletonMethodFinder : IMethodFinder
     {
-        private readonly ICacheableMethodFinder _underlyingFinder;
+        private readonly IMethodFinder _underlyingFinder;
 
-        public CachedMethodFinder(ICacheableMethodFinder underlyingFinder)
+        public SingletonMethodFinder(IMethodFinder underlyingFinder)
         {
             _underlyingFinder = underlyingFinder;
         }

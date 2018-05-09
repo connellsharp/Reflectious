@@ -4,11 +4,11 @@ using System.Diagnostics;
 
 namespace Reflectious
 {
-    internal class Cache<T>
+    internal class Cache<TKey, TItem>
     {
-        private readonly ConcurrentDictionary<string, T> _dictionary = new ConcurrentDictionary<string, T>();
+        private readonly ConcurrentDictionary<TKey, TItem> _dictionary = new ConcurrentDictionary<TKey, TItem>();
 
-        public T GetOrAdd(string key, Func<T> create)
+        public TItem GetOrAdd(TKey key, Func<TItem> create)
         {
             Debug.Assert(_dictionary.Count < 100, "Shouldn't really be adding this many cache items unless there's a bug.");
                 

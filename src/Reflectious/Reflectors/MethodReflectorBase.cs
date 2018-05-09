@@ -29,5 +29,10 @@ namespace Reflectious
             object value = method.Invoke(Instance, args);
             return (TReturn) value;
         }
+
+        public ServiceProviderMethodReflector<TInstance, TReturn> FromServiceProvider(IServiceProvider serviceProvider)
+        {
+            return new ServiceProviderMethodReflector<TInstance, TReturn>(Instance, MethodFinder, serviceProvider);
+        }
     }
 }
