@@ -118,7 +118,7 @@ namespace Reflectious.Tests
                 {
                     LibraryCode = () =>
                     {
-                        var reader = typeof(TypeParamStub<,>).Reflect()
+                        ITypeParamStub<Stub> reader = typeof(TypeParamStub<,>).Reflect()
                             .MakeGeneric(typeof(Stub), propertyReturnType)
                             .CastTo<ITypeParamStub<Stub>>()
                             .CreateInstance(getLengthExpr);
@@ -126,7 +126,7 @@ namespace Reflectious.Tests
                     NativeCode = () =>
                     {
                         Type readerFieldValueType = typeof(TypeParamStub<,>).MakeGenericType(typeof(Stub), propertyReturnType);
-                        var reader = (ITypeParamStub<Stub>) Activator.CreateInstance(readerFieldValueType, getLengthExpr);
+                        ITypeParamStub<Stub> reader = (ITypeParamStub<Stub>) Activator.CreateInstance(readerFieldValueType, getLengthExpr);
                     }
                 }
                 .AssertFasterOrEqual();

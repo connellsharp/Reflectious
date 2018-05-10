@@ -53,6 +53,46 @@ namespace Reflectious
         }
 
         [PublicAPI]
+        public TType CreateInstance()
+        {
+            return GetConstructor()
+                .WithParameters()
+                .Invoke();
+        }
+
+        [PublicAPI]
+        public TType CreateInstance<TArg1>(TArg1 arg1)
+        {
+            return GetConstructor()
+                .WithParameters<TArg1>()
+                .Invoke(arg1);
+        }
+
+        [PublicAPI]
+        public TType CreateInstance<TArg1, TArg2>(TArg1 arg1, TArg2 arg2)
+        {
+            return GetConstructor()
+                .WithParameters<TArg1, TArg2>()
+                .Invoke(arg1, arg2);
+        }
+
+        [PublicAPI]
+        public TType CreateInstance<TArg1, TArg2, TArg3>(TArg1 arg1, TArg2 arg2, TArg3 arg3)
+        {
+            return GetConstructor()
+                .WithParameters<TArg1, TArg2, TArg3>()
+                .Invoke(arg1, arg2, arg3);
+        }
+
+        [PublicAPI]
+        public TType CreateInstance<TArg1, TArg2, TArg3, TArg4>(TArg1 arg1, TArg2 arg2, TArg3 arg3, TArg4 arg4)
+        {
+            return GetConstructor()
+                .WithParameters<TArg1, TArg2, TArg3, TArg4>()
+                .Invoke(arg1, arg2, arg3, arg4);
+        }
+
+        [PublicAPI]
         public TType CreateInstance(params object[] args)
         {
             return GetConstructor()

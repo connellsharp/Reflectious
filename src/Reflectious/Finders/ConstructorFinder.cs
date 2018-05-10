@@ -38,6 +38,7 @@ namespace Reflectious
             
             var ctorInfo = FindConstructorInfo(type);
             return new CompiledLambdaConstructor(ctorInfo);
+            
             return new ReflectionConstructor(ctorInfo);
         }
 

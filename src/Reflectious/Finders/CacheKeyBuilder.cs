@@ -28,14 +28,14 @@ namespace Reflectious
             {
                 startShift++;
                 
-                if (startShift >= 8)
+                if (startShift >= 32)
                     startShift = 0;
                 
                 AddType(type, startShift);
             }
         }
 
-        public void AddString(string memberName, int shift = 8)
+        public void AddString(string memberName, int shift = 32)
         {
             ulong hashCode = (ulong) memberName.GetHashCode();
             Key ^= hashCode << shift;
