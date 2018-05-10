@@ -15,12 +15,15 @@ namespace Reflectious
         public Type[] ParameterTypes { get; set; }
         public bool WantsParameterTypes { get; } = false;
 
-        public string GetCacheKey()
+        public ulong GetCacheKey()
         {
-            var builder = new StringBuilder(MemberName);
-            builder.AppendFullTypeNames(GenericArguments);
-            builder.AppendFullTypeNames(ParameterTypes);
-            return builder.ToString();
+            var keyBuilder = new CacheKeyBuilder();
+            
+            keyBuilder.AddString(MemberName);
+            keyBuilder.AddTypes(GenericArguments);
+            keyBuilder.AddTypes(ParameterTypes);
+
+            return keyBuilder.Key;
         }
 
         public IMethod Find()

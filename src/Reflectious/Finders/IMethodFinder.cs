@@ -13,6 +13,6 @@ namespace Reflectious
 
     internal interface ICacheableMethodFinder : IMethodFinder
     {
-        string GetCacheKey();
+        ulong GetCacheKey();
     }
 }

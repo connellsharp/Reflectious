@@ -5,13 +5,16 @@ using System.Reflection;
 
 namespace Reflectious
 {
+    /// <summary>
+    /// Idea and code from https://rogerjohansson.blog/2008/02/28/linq-expressions-creating-objects/
+    /// </summary>
     internal class CompiledLambdaConstructor : IMethod
     {
         private readonly ObjectActivator _objActivator;
 
         public CompiledLambdaConstructor(ConstructorInfo ctorInfo)
         {
-            _objActivator = NewMethod(ctorInfo);
+            _objActivator = CreateObjectActivator(ctorInfo);
         }
 
         public object Invoke(object instance, object[] args)
@@ -25,7 +28,7 @@ namespace Reflectious
             throw new NotImplementedException();
         }
 
-        private static ObjectActivator NewMethod(ConstructorInfo ctorInfo)
+        private static ObjectActivator CreateObjectActivator(ConstructorInfo ctorInfo)
         {
             ParameterInfo[] paramsInfo = ctorInfo.GetParameters();
 
