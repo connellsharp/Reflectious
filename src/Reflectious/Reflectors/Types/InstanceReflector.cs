@@ -58,13 +58,4 @@ namespace Reflectious
             return new PropertyReflector(instance, finder);
         }
     }
-
-    public class WeakExtensionMethodReflector : WeakMethodReflector
-    {
-        internal WeakExtensionMethodReflector(object instance, IMethodFinder finder)
-            : base(instance, finder)
-        {
-            
-        }
-    }
 }

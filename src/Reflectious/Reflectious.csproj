@@ -12,4 +12,7 @@
   <ItemGroup>
     <Reference Include="System.Reflection" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Reflectors\Type" />
+  </ItemGroup>
 </Project>
