@@ -25,7 +25,7 @@ namespace Reflectious
 
         public MethodInfo GetMethodInfo()
         {
-            throw new NotImplementedException();
+            throw new NotSupportedException("Cannot get MethodInfo from compiled lambda constructor.");
         }
 
         private static ObjectActivator CreateObjectActivator(ConstructorInfo ctorInfo)

@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>netstandard2.0;net452</TargetFrameworks>
-    <PackageVersion>0.9</PackageVersion>
+    <PackageVersion>0.9.1</PackageVersion>
     <Copyright>Connell Watkins 2018</Copyright>
     <PackageProjectUrl>https://github.com/connellw/Reflectious</PackageProjectUrl>
     <PackageLicenseUrl>https://github.com/connellw/Reflectious/blob/master/LICENSE.txt</PackageLicenseUrl>

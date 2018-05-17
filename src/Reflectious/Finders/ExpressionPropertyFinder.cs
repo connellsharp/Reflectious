@@ -10,7 +10,7 @@ namespace Reflectious
 
         public ExpressionPropertyFinder(Expression<Func<TSource, TReturn>> propertyExpression)
         {
-            _propertyInfo = LambdaMemberUtilities.GetPropertyInfoFromLambda(propertyExpression);
+            _propertyInfo = propertyExpression.Reflect().GetPropertyInfo();
         }
 
         public IProperty Find()
