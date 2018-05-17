@@ -18,6 +18,16 @@ namespace Reflectious
             _expression = expression ?? throw new ArgumentNullException(nameof(expression));
         }
 
+        public IMethod GetMethod()
+        {
+            return new ReflectionMethod(GetMethodInfo());
+        }
+
+        public IProperty GetProperty()
+        {
+            return new ReflectionProperty(GetPropertyInfo());
+        }
+
         public MethodInfo GetMethodInfo()
         {
             var methodCallExpr = _expression.Body as MethodCallExpression;
@@ -31,7 +41,7 @@ namespace Reflectious
         {
             var memberExpr = GetMemberExpression();
             if (memberExpr == null)
-                throw new ArgumentException(string.Format("Expression '{0}' refers to a method, not a property.", _expression));
+                throw new ArgumentException(string.Format("Expression '{0}' does not refer to a member expression.", _expression));
 
             return memberExpr.Member;
         }
