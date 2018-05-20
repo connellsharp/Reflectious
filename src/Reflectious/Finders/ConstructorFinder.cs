@@ -38,32 +38,46 @@ namespace Reflectious
             
             var ctorInfo = FindConstructorInfo(type);
             return new CompiledLambdaConstructor(ctorInfo);
-            
-            return new ReflectionConstructor(ctorInfo);
+            //return new ReflectionConstructor(ctorInfo);
         }
 
         private ConstructorInfo FindConstructorInfo(Type type)
         {
-            IEnumerable<ConstructorInfo> ctors = type.GetConstructors();
+            List<ConstructorInfo> ctors = type.GetConstructors(Flags).ToList();
 
-            if (ParameterTypes != null)
-                ctors = ctors.Where(c => MatchUtilities.MatchesParameterTypes(c, ParameterTypes));
-
-            var ctorsList = ctors.ToList();
-
-            switch (ctorsList.Count)
+            switch (ctors.Count)
             {
                 case 0:
-                    throw new MethodNotFoundException(".ctor");
+                    throw new ConstructorNotFoundException("There are no public constructors.");
 
                 case 1:
-                    return ctorsList[0];
+                    return ctors[0]; // Assume we use the only ctor
+            }
+
+            if(ParameterTypes == null)
+                throw new ConstructorNotFoundException("Multiple constructors defined and no search criteria given.");
+
+            if (ParameterTypes != null)
+                ctors = ctors.Where(c => MatchUtilities.MatchesParameterTypes(c, ParameterTypes)).ToList();
+                    
+            switch (ctors.Count)
+            {
+                case 0:
+                    throw new ConstructorNotFoundException("No constructors match the search criteria.");
+
+                case 1:
+                    return ctors[0];
 
                 default:
-                    var ctor = ctorsList.Find(c => c.GetParameters().Length == 0);
-                    return ctor ?? throw new MethodNotFoundException(".ctor");
+                    var ctor = ctors.Find(c => c.GetParameters().Length == 0);
+                    return ctor ?? throw new ConstructorNotFoundException("Multiple constructors match the search criteria.");
             }
         }
+
+        private const BindingFlags Flags = BindingFlags.Public |
+                                           BindingFlags.NonPublic |
+                                           BindingFlags.Static |
+                                           BindingFlags.Instance;
 
         private Type BuildFullType()
         {

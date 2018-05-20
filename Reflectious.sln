@@ -1,10 +1,11 @@
-﻿Microsoft Visual Studio Solution File, Format Version 12.00
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27130.2027
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Reflectious", "src\Reflectious\Reflectious.csproj", "{86159115-B18C-4515-B14C-3BCEBA67AFE3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Reflectious", "src\Reflectious\Reflectious.csproj", "{86159115-B18C-4515-B14C-3BCEBA67AFE3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Reflectious.Tests", "tests\Reflectious.Tests\Reflectious.Tests.csproj", "{50F46884-62A6-4565-9638-78D9E859FB63}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Reflectious.Tests", "tests\Reflectious.Tests\Reflectious.Tests.csproj", "{50F46884-62A6-4565-9638-78D9E859FB63}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +24,6 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{86159115-B18C-4515-B14C-3BCEBA67AFE3} = {08517E60-A9EA-4803-AB2D-5A15C6608C3E}
-		{50F46884-62A6-4565-9638-78D9E859FB63} = {D8DE754F-9C93-49C4-9117-B0CB7ABBA023}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E07ED662-9390-431F-B4D6-BDA65FE4169A}
