@@ -34,7 +34,7 @@ namespace Reflectious
         {
             MethodInfo methodInfo = FindMethodInfo();
 
-            var delegateCreator = new FuncDelegateCreator(IsStatic ? null : ClassType, ParameterTypes, methodInfo.ReturnType);
+            var delegateCreator = new SystemDelegateCreator(IsStatic ? null : ClassType, ParameterTypes, methodInfo.ReturnType);
             Type delegateType = delegateCreator.GetDelegateType();
             Delegate del = Delegate.CreateDelegate(delegateType, methodInfo);
             

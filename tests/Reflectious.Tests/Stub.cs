@@ -18,5 +18,10 @@ namespace Reflectious.Tests
         {
             return MethodExecutedString;
         }
+
+        public void DoInstanceVoidMethod(string arg)
+        {
+            InstanceProperty = arg;
+        }
     }
 }
