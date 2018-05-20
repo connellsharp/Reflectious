@@ -5,6 +5,9 @@ using JetBrains.Annotations;
 
 namespace Reflectious
 {
+    /// <summary>
+    /// Exposes fluent API for a lambda expression.
+    /// </summary>
     /// <remarks>
     /// From http://stackoverflow.com/a/672212 and http://stackoverflow.com/a/17116267
     /// </remarks>
@@ -16,6 +19,12 @@ namespace Reflectious
             : base(expression)
         {
             _expression = expression ?? throw new ArgumentNullException(nameof(expression));
+        }
+
+        public LambdaExpressionReflector<TObj, TChained> Chain<TChained>(Expression<Func<TReturn, TChained>> nextExpression)
+        {
+            var chainedExpr = _expression.Chain(nextExpression);
+            return new LambdaExpressionReflector<TObj, TChained>(chainedExpr);
         }
 
         public IMethod GetMethod()
@@ -92,6 +101,12 @@ namespace Reflectious
         public LambdaExpressionReflector(LambdaExpression expression)
         {
             _expression = expression;
+        }
+
+        public LambdaExpressionReflector Chain(LambdaExpression nextExpression)
+        {
+            var chainedExpr = _expression.Chain(nextExpression);
+            return new LambdaExpressionReflector(chainedExpr);
         }
     }
 }
