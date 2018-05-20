@@ -27,6 +27,12 @@ namespace Reflectious
             return new LambdaExpressionReflector<TObj, TChained>(chainedExpr);
         }
 
+        public LambdaExpressionReflector<TObj, bool> ChainEquals(TReturn returnConstant)
+        {
+            var chainedExpr = _expression.ChainEquals(returnConstant);
+            return new LambdaExpressionReflector<TObj, bool>(chainedExpr);
+        }
+
         public IMethod GetMethod()
         {
             return new ReflectionMethod(GetMethodInfo());

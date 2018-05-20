@@ -18,6 +18,16 @@ namespace Reflectious
             Expression visitedSecond = new SwapVisitor(second.Parameters[0], first.Body).Visit(second.Body);
             return Expression.Lambda(visitedSecond, first.Parameters);
         }
+        
+        /// <summary>
+        /// Returns a predicate that returns true if the item in the <see cref="lambda"/> matches the <see cref="identifierObj"/>.
+        /// </summary>
+        public static Expression<Func<TFrom, bool>> ChainEquals<TFrom, TReturn>(this Expression<Func<TFrom, TReturn>> lambda, TReturn returnConstant)
+        {
+            var constant = Expression.Constant(returnConstant, typeof(TReturn));
+            BinaryExpression predicateExpr = Expression.Equal(lambda.Body, constant);
+            return Expression.Lambda<Func<TFrom, bool>>(predicateExpr, lambda.Parameters);
+        }
 
         public static Expression<Func<TFrom, TCasted>> CastBody<TFrom, TOriginal, TCasted>(this Expression<Func<TFrom, TOriginal>> lambda)
         {
