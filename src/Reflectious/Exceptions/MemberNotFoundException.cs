@@ -18,7 +18,16 @@ namespace Reflectious
 
         }
     }
-    
+
+    public class ConstructorNotFoundException : MemberNotFoundException
+    {
+        public ConstructorNotFoundException(string submessage)
+            : base("A constructor could not be found: " + submessage)
+        {
+
+        }
+    }
+
     public class PropertyNotFoundException : MemberNotFoundException
     {
         public PropertyNotFoundException(string propertyName)

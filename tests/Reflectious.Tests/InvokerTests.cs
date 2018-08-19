@@ -33,6 +33,18 @@ namespace Reflectious.Tests
         }
 
         [Fact]
+        public void GetVoidMethod_Nameof_Executes()
+        {
+            var stub = new Stub();
+
+            stub.Reflect()
+                .GetMethod(nameof(Stub.DoInstanceVoidMethod))
+                .Invoke("Test arg");
+
+            Assert.Equal("Test arg", stub.InstanceProperty);
+        }
+
+        [Fact]
         public void GetProperty_Expression_CorrectValue()
         {
             var stub = new Stub();
