@@ -75,6 +75,32 @@ namespace Reflectious.Tests
         }
 
         [Fact]
+        public void MakeGeneric_ListOfStubs_AsFastAsReflection()
+        {
+            var stubType = typeof(Stub);
+            
+            new BenchmarkActions
+                {
+                    LibraryCode = () =>
+                    {
+                        int count = typeof(List<>).Reflect()
+                            .MakeGeneric(stubType)
+                            .WithNewInstance()
+                            .GetProperty("Count")
+                            .OfType<int>()
+                            .GetValue();
+                    },
+                    NativeCode = () =>
+                    {
+                        var type = typeof(List<>).MakeGenericType(stubType);
+                        var list = Activator.CreateInstance(type);
+                        int count = (int)type.GetProperty("Count").GetValue(list);
+                    }
+                }
+                .AssertFasterOrEqual();
+        }
+
+        [Fact]
         public void FindMethod_Stub_AsFastAsReflection()
         {
             new BenchmarkActions
