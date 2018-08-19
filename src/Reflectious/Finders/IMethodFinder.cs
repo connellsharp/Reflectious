@@ -10,9 +10,4 @@ namespace Reflectious
 
         IMethod Find();
     }
-
-    internal interface ICacheableMethodFinder : IMethodFinder
-    {
-        ulong GetCacheKey();
-    }
 }
