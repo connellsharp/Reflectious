@@ -20,7 +20,7 @@ namespace Reflectious.Tests
                 {
                     LibraryCode = () =>
                     {
-                        string returnValue = stub.Reflect()
+                        string returnValue = Reflect.Instance(stub)
                             .GetMethod(methodName, Assume.UnambiguousName)
                             .ReturnsType<string>()
                             .Invoke();
@@ -42,7 +42,7 @@ namespace Reflectious.Tests
                 {
                     LibraryCode = () =>
                     {
-                        Stub stub = new StaticReflector<Stub>()
+                        Stub stub = Reflect.Type<Stub>()
                             .GetConstructor()
                             .Invoke();
                     },
@@ -63,7 +63,7 @@ namespace Reflectious.Tests
                 {
                     LibraryCode = () =>
                     {
-                        Stub stub = new StaticReflector<Stub>()
+                        Stub stub = Reflect.Type<Stub>()
                             .CreateInstance();
                     },
                     NativeCode = () =>
@@ -83,7 +83,7 @@ namespace Reflectious.Tests
                 {
                     LibraryCode = () =>
                     {
-                        int count = typeof(List<>).Reflect()
+                        int count = Reflect.Type(typeof(List<>))
                             .MakeGeneric(stubType)
                             .WithNewInstance()
                             .GetProperty("Count")
@@ -107,7 +107,7 @@ namespace Reflectious.Tests
                 {
                     LibraryCode = () =>
                     {
-                        MethodInfo anyMethod = typeof(Enumerable).Reflect()
+                        MethodInfo anyMethod = Reflect.Type(typeof(Enumerable))
                             .GetMethod("Any")
                             .MakeGeneric<Stub>()
                             .WithParameters<IEnumerable<Stub>, Func<Stub, bool>>() // TODO handle List and arrays etc ?
@@ -144,7 +144,7 @@ namespace Reflectious.Tests
                 {
                     LibraryCode = () =>
                     {
-                        ITypeParamStub<Stub> reader = typeof(TypeParamStub<,>).Reflect()
+                        ITypeParamStub<Stub> reader = Reflect.Type(typeof(TypeParamStub<,>))
                             .MakeGeneric(typeof(Stub), propertyReturnType)
                             .CastTo<ITypeParamStub<Stub>>()
                             .CreateInstance(getLengthExpr);

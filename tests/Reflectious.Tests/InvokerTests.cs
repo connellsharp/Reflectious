@@ -12,7 +12,7 @@ namespace Reflectious.Tests
         {
             var stub = new Stub();
             
-            string returnValue = stub.Reflect()
+            string returnValue = Reflect.Instance(stub)
                 .GetMethod(s => s.DoInstanceMethod())
                 .Invoke();
             
@@ -24,7 +24,7 @@ namespace Reflectious.Tests
         {
             var stub = new Stub();
 
-            string returnValue = stub.Reflect()
+            string returnValue = Reflect.Instance(stub)
                 .GetMethod(nameof(Stub.DoInstanceMethod))
                 .ReturnsType<string>()
                 .Invoke();
@@ -37,7 +37,7 @@ namespace Reflectious.Tests
         {
             var stub = new Stub();
 
-            stub.Reflect()
+            Reflect.Instance(stub)
                 .GetMethod(nameof(Stub.DoInstanceVoidMethod))
                 .Invoke("Test arg");
 
@@ -49,7 +49,7 @@ namespace Reflectious.Tests
         {
             var stub = new Stub();
             
-            string returnValue = stub.Reflect()
+            string returnValue = Reflect.Instance(stub)
                 .GetProperty(s => s.InstanceProperty)
                 .GetValue();
             
@@ -61,7 +61,7 @@ namespace Reflectious.Tests
         {
             var stub = new Stub();
             
-            stub.Reflect()
+            Reflect.Instance(stub)
                 .GetProperty(s => s.InstanceProperty)
                 .SetValue("Test change");
             
@@ -71,7 +71,7 @@ namespace Reflectious.Tests
         [Fact]
         public void SetStaticProperty_Expression_ChangesValue()
         {            
-            typeof(Stub).Reflect()
+            Reflect.Type<Stub>()
                 .GetProperty(nameof(Stub.StaticProperty))
                 .OfType<string>()
                 .SetValue("Test change");
@@ -86,7 +86,7 @@ namespace Reflectious.Tests
         {
             var stub = new Stub();
             
-            var result = typeof(Enumerable).Reflect()
+            var result = Reflect.Type(typeof(Enumerable))
                 .GetMethod(nameof(Enumerable.Any))
                 .ReturnsType<bool>()
                 .MakeGeneric<Stub>()
@@ -99,7 +99,7 @@ namespace Reflectious.Tests
         [Fact]
         public void ConstructorMakeGeneric_GenericList_CreatesObject()
         {
-            var result = typeof(List<>).Reflect()
+            var result = Reflect.Type(typeof(List<>))
                 .GetConstructor()
                 .MakeGeneric<Stub>()
                 .Invoke();
@@ -112,7 +112,7 @@ namespace Reflectious.Tests
         {
             var arr = new[] {new Stub()};
 
-            var result = typeof(List<>).Reflect()
+            var result = Reflect.Type(typeof(List<>))
                 .GetConstructor()
                 .MakeGeneric<Stub>()
                 .Invoke(arr.AsEnumerable());
@@ -124,7 +124,7 @@ namespace Reflectious.Tests
         [Fact]
         public void TypeMadeGenericConstructor_GenericList_CreatesObject()
         {
-            var result = typeof(List<>).Reflect()
+            var result = Reflect.Type(typeof(List<>))
                 .MakeGeneric<Stub>()
                 .GetConstructor()
                 .WithParameters()
@@ -136,7 +136,7 @@ namespace Reflectious.Tests
         [Fact]
         public void AlreadyGenericTypeConstructor_GenericList_CreatesObject()
         {
-            var result = typeof(List<Stub>).Reflect()
+            var result = Reflect.Type(typeof(List<Stub>))
                 .GetConstructor()
                 .WithParameters()
                 .Invoke();
@@ -147,7 +147,7 @@ namespace Reflectious.Tests
         [Fact]
         public void StrongStaticInvoker_GenericList_CreatesObject()
         {
-            var result = new StaticReflector<List<Stub>>()
+            var result = Reflect.Type<List<Stub>>()
                 .GetConstructor()
                 .WithParameters()
                 .Invoke();
@@ -158,7 +158,7 @@ namespace Reflectious.Tests
         [Fact]
         public void StrongStaticCreateInstance_GenericList_CreatesObject()
         {
-            var result = new StaticReflector<List<Stub>>()
+            var result = Reflect.Type<List<Stub>>()
                 .CreateInstance();
             
             Assert.IsType<List<Stub>>(result);
@@ -171,7 +171,7 @@ namespace Reflectious.Tests
         {
             IEnumerable<Stub> stubs = new[] { new Stub() };
 
-            bool hasAny = stubs.Reflect()
+            bool hasAny = Reflect.Instance(stubs)
                 .GetExtensionMethod(typeof(Enumerable), "Any")
                 .ReturnsType<bool>()
                 .WithParameters<Func<Stub, bool>>()

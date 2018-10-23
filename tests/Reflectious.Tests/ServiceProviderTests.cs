@@ -10,7 +10,7 @@ namespace Reflectious.Tests
         {
             var sp = new ActivatorServiceProvider();
             
-            var result = typeof(SpStub).Reflect()
+            var result = Reflect.Type<SpStub>()
                 .WithNewInstance()
                 .GetMethod(nameof(SpStub.GetValue))
                 .WithParameters<ParamStub1, ParamStub2>()
@@ -25,7 +25,7 @@ namespace Reflectious.Tests
         {
             var sp = new ActivatorServiceProvider();
             
-            var result = typeof(SpStub).Reflect()
+            var result = Reflect.Type<SpStub>()
                 .WithNewInstance()
                 .FromServiceProvider(sp)
                 .GetMethod(nameof(SpStub.GetValue))
@@ -39,7 +39,7 @@ namespace Reflectious.Tests
         {
             var sp = new ActivatorServiceProvider();
             
-            var result = typeof(SpStub).Reflect()
+            var result = Reflect.Type<SpStub>()
                 .WithNewInstance()
                 .UsingConstructor<ParamStub1>()
                 .WithArgumentsFromServiceProvider(sp)

@@ -10,7 +10,7 @@ namespace Reflectious
 
         public ExpressionMethodFinder(Expression<Func<TSource, TReturn>> expression)
         {
-            _methodInfo = expression.Reflect().GetMethodInfo();
+            _methodInfo = Reflect.Expression(expression).GetMethodInfo();
         }
 
         public Type[] GenericArguments
