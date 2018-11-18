@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 
@@ -11,10 +13,12 @@ namespace Reflectious
     internal class CompiledLambdaConstructor : IMethod
     {
         private readonly ObjectActivator _objActivator;
+        private readonly ParameterInfo[] _parameters;
 
         public CompiledLambdaConstructor(ConstructorInfo ctorInfo)
         {
-            _objActivator = CreateObjectActivator(ctorInfo);
+            _parameters = ctorInfo.GetParameters();
+            _objActivator = CreateObjectActivator(ctorInfo, _parameters);
         }
 
         public object Invoke(object instance, object[] args)
@@ -28,20 +32,23 @@ namespace Reflectious
             throw new NotSupportedException("Cannot get MethodInfo from compiled lambda constructor.");
         }
 
-        private static ObjectActivator CreateObjectActivator(ConstructorInfo ctorInfo)
+        public IEnumerable<Type> GetParameterTypes()
         {
-            ParameterInfo[] paramsInfo = ctorInfo.GetParameters();
+            return _parameters.Select(p => p.ParameterType);
+        }
 
+        private static ObjectActivator CreateObjectActivator(ConstructorInfo ctorInfo, ParameterInfo[] parameters)
+        {
             //create a single param of type object[]
             ParameterExpression param = Expression.Parameter(typeof(object[]), "args");
 
-            Expression[] argsExp = new Expression[paramsInfo.Length];
+            Expression[] argsExp = new Expression[parameters.Length];
 
             //pick each arg from the params array and create a typed expression of them
-            for (int i = 0; i < paramsInfo.Length; i++)
+            for (int i = 0; i < parameters.Length; i++)
             {
                 Expression index = Expression.Constant(i);
-                Type paramType = paramsInfo[i].ParameterType;
+                Type paramType = parameters[i].ParameterType;
 
                 Expression paramAccessorExp = Expression.ArrayIndex(param, index);
                 Expression paramCastExp = Expression.Convert(paramAccessorExp, paramType);

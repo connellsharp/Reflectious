@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 
 namespace Reflectious
@@ -32,6 +34,11 @@ namespace Reflectious
         public MethodInfo GetMethodInfo()
         {
             return _del.Method;
+        }
+
+        public IEnumerable<Type> GetParameterTypes()
+        {
+            return GetMethodInfo().GetParameters().Select(p => p.ParameterType);
         }
     }
 }

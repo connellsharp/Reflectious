@@ -1,4 +1,6 @@
-﻿using System.Reflection;
+﻿using System;
+using System.Collections.Generic;
+using System.Reflection;
 
 namespace Reflectious
 {
@@ -7,5 +9,7 @@ namespace Reflectious
         object Invoke(object instance, object[] args);
         
         MethodInfo GetMethodInfo();
+        
+        IEnumerable<Type> GetParameterTypes();
     }
 }

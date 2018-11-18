@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 
 namespace Reflectious
@@ -23,6 +25,11 @@ namespace Reflectious
         public MethodInfo GetMethodInfo()
         {
             throw new InvalidOperationException("Cannot get the MethodInfo for a constructor.");
+        }
+
+        public IEnumerable<Type> GetParameterTypes()
+        {
+            return _ctorInfo.GetParameters().Select(p => p.ParameterType);
         }
     }
 }

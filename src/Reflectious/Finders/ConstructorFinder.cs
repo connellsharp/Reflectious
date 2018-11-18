@@ -56,9 +56,8 @@ namespace Reflectious
 
             if(ParameterTypes == null)
                 throw new ConstructorNotFoundException("Multiple constructors defined and no search criteria given.");
-
-            if (ParameterTypes != null)
-                ctors = ctors.Where(c => MatchUtilities.MatchesParameterTypes(c, ParameterTypes)).ToList();
+            
+            ctors = ctors.Where(c => MatchUtilities.MatchesParameterTypes(c, ParameterTypes)).ToList();
                     
             switch (ctors.Count)
             {

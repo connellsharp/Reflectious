@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using JetBrains.Annotations;
 
@@ -7,14 +8,15 @@ namespace Reflectious
     public class ServiceProviderMethodReflector<TInstance, TReturn>: MethodReflectorBase<TInstance, TReturn>
     {
         private readonly IServiceProvider _serviceProvider;
+        private readonly IEnumerable<Type> _paramTypes;
 
         internal ServiceProviderMethodReflector(TInstance instance, [NotNull] IMethodFinder methodFinder, 
             IServiceProvider serviceProvider) 
             : base(instance, methodFinder)
         {
-            if (methodFinder.ParameterTypes == null)
-                throw new NoParameterTypesException();
-            
+            _paramTypes = methodFinder.ParameterTypes
+                          ?? methodFinder.Find().GetParameterTypes();
+
             _serviceProvider = serviceProvider;
         }
 
@@ -24,7 +26,7 @@ namespace Reflectious
         [PublicAPI]
         public TReturn Invoke()
         {
-            object[] args = MethodFinder.ParameterTypes.Select(t => _serviceProvider.GetService(t)).ToArray();
+            object[] args = _paramTypes.Select(t => _serviceProvider.GetService(t)).ToArray();
             return base.Invoke(args);
         }
     }

@@ -1,4 +1,5 @@
 using System;
+using Moq;
 using Xunit;
 
 namespace Reflectious.Tests
@@ -6,66 +7,117 @@ namespace Reflectious.Tests
     public class ServiceProviderTests
     {
         [Fact]
-        public void InvokeMethod_TwoClassArgs_CorrectString()
+        public void MultiCtors_WithNewInstanceWithProvider_UsesEmptyCtor()
         {
             var sp = new ActivatorServiceProvider();
             
-            var result = Reflect.Type<SpStub>()
+            var result = Reflect.Type<TwoCtorStub>()
                 .WithNewInstance()
-                .GetMethod(nameof(SpStub.GetValue))
+                .GetMethod(nameof(TwoCtorStub.GetValue))
                 .WithParameters<ParamStub1, ParamStub2>()
                 .FromServiceProvider(sp)
                 .Invoke();
             
-            Assert.Equal("emptyctor_ParamStub1Value_ParamStub2Value_", result);
+            Assert.Equal("EmptyCtor_ParamStub1Value_ParamStub2Value_", result);
         }
         
         [Fact]
-        public void ServiceProvider_NewInstance_CorrectValue()
+        public void MultiCtors_WithNewInstance_UsesEmptyCtor()
         {
             var sp = new ActivatorServiceProvider();
             
-            var result = Reflect.Type<SpStub>()
+            var result = Reflect.Type<TwoCtorStub>()
                 .WithNewInstance()
-                .FromServiceProvider(sp)
-                .GetMethod(nameof(SpStub.GetValue))
+                .GetMethod(nameof(TwoCtorStub.GetValue))
                 .Invoke(new ParamStub1(), new ParamStub2());
             
-            Assert.Equal("emptyctor_ParamStub1Value_ParamStub2Value_", result);
+            Assert.Equal("EmptyCtor_ParamStub1Value_ParamStub2Value_", result);
         }
         
         [Fact]
-        public void ServiceProvider_ConstructorArgs_CorrectValue()
+        public void MutiCtors_SpecifiedCtorWithServiceProvider_UsesCorrectCtor()
         {
             var sp = new ActivatorServiceProvider();
             
-            var result = Reflect.Type<SpStub>()
+            var result = Reflect.Type<TwoCtorStub>()
                 .WithNewInstance()
                 .UsingConstructor<ParamStub1>()
                 .WithArgumentsFromServiceProvider(sp)
-                .GetMethod(nameof(SpStub.GetValue))
+                .GetMethod(nameof(TwoCtorStub.GetValue))
                 .Invoke(new ParamStub1(), new ParamStub2());
             
-            Assert.Equal("stub2ctor_ParamStub1Value_ParamStub2Value_", result);
+            Assert.Equal("ParamCtor_ParamStub1Value_ParamStub2Value_", result);
+        }
+        
+        [Fact]
+        public void MultiCtors_CreateInstance_UsesEmptyCtor()
+        {
+            var instance = Reflect.Type<TwoCtorStub>()
+                .CreateInstance();
+            
+            Assert.Equal("EmptyCtor_", instance.Prefix);
+        }
+        
+        [Fact]
+        public void OneCtor_WithServiceProvider_GetsInstanceFromProvider()
+        {            
+            var spMock = new Mock<IServiceProvider>();
+            spMock.Setup(sp => sp.GetService(typeof(ParamStub1))).Returns(new ParamStub1());
+
+            var instance = Reflect.Type<OneCtorStub>()
+                .GetConstructor()
+                .FromServiceProvider(spMock.Object)
+                .Invoke();
+            
+            spMock.Verify(sp => sp.GetService(typeof(ParamStub1)));
+        }
+        
+        [Fact]
+        public void MultiCtors_SpecifiedParamsWithServiceProvider_GetsInstanceFromProvider()
+        {            
+            var spMock = new Mock<IServiceProvider>();
+
+            var instance = Reflect.Type<TwoCtorStub>()
+                .GetConstructor()
+                .WithParameters(typeof(ParamStub1))
+                .FromServiceProvider(spMock.Object)
+                .Invoke();
+            
+            spMock.Verify(sp => sp.GetService(typeof(ParamStub1)));
         }
 
-        private class SpStub
+        private class OneCtorStub
         {
-            private readonly string _prefix;
+            public string Prefix { get; }
 
-            public SpStub()
+            public OneCtorStub(ParamStub1 stub1)
             {
-                _prefix = "emptyctor_";
-            }
-            
-            public SpStub(ParamStub1 stub1)
-            {
-                _prefix = "stub2ctor_";
+                Prefix = "OnlyCtor_";
             }
             
             public string GetValue(ParamStub1 paramStub1, ParamStub2 paramStub2)
             {
-                return _prefix + paramStub1.Value + paramStub2.Value;
+                return Prefix + paramStub1.Value + paramStub2.Value;
+            }
+        }
+
+        private class TwoCtorStub
+        {
+            public string Prefix { get; }
+
+            public TwoCtorStub()
+            {
+                Prefix = "EmptyCtor_";
+            }
+            
+            public TwoCtorStub(ParamStub1 stub1)
+            {
+                Prefix = "ParamCtor_";
+            }
+            
+            public string GetValue(ParamStub1 paramStub1, ParamStub2 paramStub2)
+            {
+                return Prefix + paramStub1.Value + paramStub2.Value;
             }
         }
 

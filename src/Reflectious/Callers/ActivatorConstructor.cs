@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Reflection;
 
 namespace Reflectious
@@ -23,6 +24,11 @@ namespace Reflectious
         public MethodInfo GetMethodInfo()
         {
             throw new NotSupportedException("Cannot get method info for an Activator constructor.");
+        }
+
+        public IEnumerable<Type> GetParameterTypes()
+        {
+            throw new NotSupportedException("Cannot get parameter types for an Activator constructor.");
         }
     }
 }
