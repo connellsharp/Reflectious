@@ -36,7 +36,7 @@ echo "build: Build version suffix is $buildSuffix"
 
 exec { & dotnet build Reflectious.sln -c Release --version-suffix=$buildSuffix }
 
-Push-Location -Path .\test\Reflectious.Tests
+Push-Location -Path .\tests\Reflectious.Tests
 
 try {
     exec { & dotnet test -c Release --no-build --no-restore }
