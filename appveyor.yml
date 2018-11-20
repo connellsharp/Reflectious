@@ -4,8 +4,8 @@ pull_requests:
 branches:
   only:
   - master
-nuget:
-  disable_publish_on_pr: true
+#nuget:
+#  disable_publish_on_pr: true
 build_script:
 - ps: .\build.ps1
 test: off

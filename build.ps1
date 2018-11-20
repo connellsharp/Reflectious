@@ -46,4 +46,4 @@ try {
 
 Pop-Location
 
-exec { & dotnet pack .\src\Reflectious\Reflectious.csproj -c Release -o .\artifacts --include-symbols --no-build $versionSuffix }
+exec { & dotnet pack .\src\Reflectious\Reflectious.csproj -c Release -o artifacts --include-symbols --no-build $versionSuffix }
