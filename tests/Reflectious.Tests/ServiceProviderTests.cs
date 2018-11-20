@@ -7,7 +7,20 @@ namespace Reflectious.Tests
     public class ServiceProviderTests
     {
         [Fact]
-        public void MultiCtors_WithNewInstanceWithProvider_UsesEmptyCtor()
+        public void MultiCtors_WithNewInstance_UsesEmptyCtor()
+        {
+            var sp = new ActivatorServiceProvider();
+            
+            var result = Reflect.Type<TwoCtorStub>()
+                .WithNewInstance()
+                .GetMethod(nameof(TwoCtorStub.GetValue))
+                .Invoke(new ParamStub1(), new ParamStub2());
+            
+            Assert.Equal("EmptyCtor_ParamStub1Value_ParamStub2Value_", result);
+        }
+
+        [Fact]
+        public void MultiCtors_WithNewInstanceWithMethodParametersFromProvider_UsesEmptyCtor()
         {
             var sp = new ActivatorServiceProvider();
             
@@ -20,20 +33,7 @@ namespace Reflectious.Tests
             
             Assert.Equal("EmptyCtor_ParamStub1Value_ParamStub2Value_", result);
         }
-        
-        [Fact]
-        public void MultiCtors_WithNewInstance_UsesEmptyCtor()
-        {
-            var sp = new ActivatorServiceProvider();
-            
-            var result = Reflect.Type<TwoCtorStub>()
-                .WithNewInstance()
-                .GetMethod(nameof(TwoCtorStub.GetValue))
-                .Invoke(new ParamStub1(), new ParamStub2());
-            
-            Assert.Equal("EmptyCtor_ParamStub1Value_ParamStub2Value_", result);
-        }
-        
+
         [Fact]
         public void MutiCtors_SpecifiedCtorWithServiceProvider_UsesCorrectCtor()
         {
@@ -84,6 +84,22 @@ namespace Reflectious.Tests
                 .Invoke();
             
             spMock.Verify(sp => sp.GetService(typeof(ParamStub1)));
+        }
+        
+        [Fact]
+        public void MultiCtors_WithNewInstanceFromServiceProvider_GetsInstanceFromProvider()
+        {            
+            var spMock = new Mock<IServiceProvider>();
+            spMock.Setup(sp => sp.GetService(typeof(TwoCtorStub))).Returns(new TwoCtorStub());
+
+            var prefix = Reflect.Type<TwoCtorStub>()
+                .WithNewInstance()
+                .FromServiceProvider(spMock.Object)
+                .GetProperty(s => s.Prefix)
+                .GetValue();
+            
+            spMock.Verify(sp => sp.GetService(typeof(TwoCtorStub)));
+            Assert.Equal("EmptyCtor_", prefix);
         }
 
         private class OneCtorStub

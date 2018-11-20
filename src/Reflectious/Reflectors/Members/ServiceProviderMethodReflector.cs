@@ -8,14 +8,13 @@ namespace Reflectious
     public class ServiceProviderMethodReflector<TInstance, TReturn>: MethodReflectorBase<TInstance, TReturn>
     {
         private readonly IServiceProvider _serviceProvider;
-        private readonly IEnumerable<Type> _paramTypes;
 
         internal ServiceProviderMethodReflector(TInstance instance, [NotNull] IMethodFinder methodFinder, 
             IServiceProvider serviceProvider) 
             : base(instance, methodFinder)
         {
-            _paramTypes = methodFinder.ParameterTypes
-                          ?? methodFinder.Find().GetParameterTypes();
+            if (methodFinder.ParameterTypes == null)
+                methodFinder.ParameterTypes = methodFinder.Find().GetParameterTypes().ToArray();
 
             _serviceProvider = serviceProvider;
         }
@@ -25,8 +24,8 @@ namespace Reflectious
         /// </summary>
         [PublicAPI]
         public TReturn Invoke()
-        {
-            object[] args = _paramTypes.Select(t => _serviceProvider.GetService(t)).ToArray();
+        {   
+            object[] args = MethodFinder.ParameterTypes.Select(t => _serviceProvider.GetService(t)).ToArray();
             return base.Invoke(args);
         }
     }
