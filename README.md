@@ -4,29 +4,55 @@ Reflectious simplifies, extends and optimises metaprogramming in C#. It combines
 
 ## Fluent API
 
-The Reflectors can all be accessed using the `.Reflect()` extension. From there, you can find members and invoke them.
+The Reflectors can all be accessed using the static `Reflect` class. From there, you can find members and invoke them.
 
-|**Easily find a method overload:**
+**Invoke a method by name:**
 ```
-bool isAnyAdults = typeof(Enumerable).Reflect()
+Reflect.Instance(obj)
+    .GetMethod("DoTheThing")
+    .Invoke();
+```
+
+**Easily find a method overload:**
+```
+bool containsAdults = Reflect.Type(typeof(Enumerable))
     .GetMethod("Any")
     .MakeGeneric<Person>()
     .WithParameters<IEnumerable<Person>, Func<Person, bool>>()
     .Invoke(people, a => a.Age >= 18);
 ```
 
-|**Or find the extension and infer the types:**
+**Or find the extension and infer the types:**
 ```
-bool isAnyAdults = people.Reflect()
+bool containsAdults = Reflect.Instance(people)
     .GetExtensionMethod(typeof(Enumerable), "Any")
     .WithParameters<Func<Person, bool>>()
     .Invoke(a => a.Age >= 18);
 ```
 
-|**Set a property from an expression:**
+**Set a property from an expression:**
 ```
-stub.Reflect()
+Reflect.Instance(stub)
     .GetProperty(s => s.InstanceProperty)
     .SetValue("Test change");
 ```
 
+**Resolve method parameters using IServiceProvider:**
+```
+Reflect.Type<UserService>()
+    .WithNewInstance()
+    .GetMethod("CreateUser")
+    .WithParameters<IUserRepository, UserConfiguration>()
+    .FromServiceProvider(serviceProvider)
+    .Invoke();
+```
+
+**Even resolve the main instance using IServiceProvider:**
+```
+Reflect.Type<UserService>()
+    .WithNewInstance()
+    .UsingConstructor<IUserRepository, UserConfiguration>()
+    .WithArgumentsFromServiceProvider(sp)
+    .GetMethod("CreateUser")
+    .Invoke(newUser);
+```
