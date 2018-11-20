@@ -13,6 +13,13 @@ Reflect.Instance(obj)
     .Invoke();
 ```
 
+**Set a property from an expression:**
+```
+Reflect.Instance(stub)
+    .GetProperty(s => s.InstanceProperty)
+    .SetValue("Test change");
+```
+
 **Easily find a method overload:**
 ```
 bool containsAdults = Reflect.Type(typeof(Enumerable))
@@ -28,13 +35,6 @@ bool containsAdults = Reflect.Instance(people)
     .GetExtensionMethod(typeof(Enumerable), "Any")
     .WithParameters<Func<Person, bool>>()
     .Invoke(a => a.Age >= 18);
-```
-
-**Set a property from an expression:**
-```
-Reflect.Instance(stub)
-    .GetProperty(s => s.InstanceProperty)
-    .SetValue("Test change");
 ```
 
 **Resolve method parameters using IServiceProvider:**
