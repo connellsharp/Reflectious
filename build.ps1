@@ -22,7 +22,7 @@ function Exec
     }
 }
 
-$artifactsPath = (Get-Item -Path ".\artifacts").FullName
+$artifactsPath = (Get-Item -Path ".\").FullName + "\artifacts"
 
 if(Test-Path $artifactsPath) { Remove-Item $artifactsPath -Force -Recurse }
 
