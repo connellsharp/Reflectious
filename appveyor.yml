@@ -4,8 +4,8 @@ pull_requests:
 branches:
   only:
   - master
-nuget:
-  disable_publish_on_pr: true
+#nuget:
+#  disable_publish_on_pr: true
 build_script:
 - ps: .\build.ps1
 test: off
@@ -16,7 +16,7 @@ deploy:
 - provider: NuGet
   server: https://www.myget.org/F/firestorm/api/v2/package
   api_key:
-    secure: n9HswXCR8jJn1EUwIADbgVRa3YIbshz6lQXO2fAabYiBSBsadUl3AQuHkn7T8Gfi
+    secure: n9HswXCR8jJn1EUwIADbgVRa3YIbshz6lQXO2fAabYiBSBsadUl3AQuHkn7T8Gfo
   skip_symbols: true
   on:
     branch: master
