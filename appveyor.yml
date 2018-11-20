@@ -16,7 +16,7 @@ deploy:
 - provider: NuGet
   server: https://www.myget.org/F/firestorm/api/v2/package
   api_key:
-    secure: n9HswXCR8jJn1EUwIADbgVRa3YIbshz6lQXO2fAabYiBSBsadUl3AQuHkn7T8Gfi
+    secure: n9HswXCR8jJn1EUwIADbgVRa3YIbshz6lQXO2fAabYiBSBsadUl3AQuHkn7T8Gfo
   skip_symbols: true
   on:
     branch: master
