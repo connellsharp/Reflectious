@@ -1,5 +1,7 @@
 # Reflectious
 
+[![Build status](https://ci.appveyor.com/api/projects/status/2wug1rlgkyesoqtn?svg=true)](https://ci.appveyor.com/project/connellw/reflectious) [![NuGet](https://img.shields.io/nuget/v/Reflectious.svg)](https://www.nuget.org/packages/Reflectious/)
+
 Reflectious simplifies, extends and optimises metaprogramming in C#. It combines techniques from Reflection, Expression Trees and Delegates.
 
 ## Fluent API
